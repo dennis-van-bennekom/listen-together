@@ -21,4 +21,15 @@ const app = new Vue({
     el: '#app'
 });
 
-axios.get('/current').then(({data}) => console.log(data));
+const socket = io('localhost:3000');
+
+function update() {
+    axios.get('/current').then(({data}) => {
+        // Update store?
+        socket.emit('update', data);
+    });
+}
+
+setInterval(update, 5000);
+update();
+

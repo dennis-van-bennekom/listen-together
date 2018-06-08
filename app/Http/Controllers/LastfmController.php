@@ -33,8 +33,8 @@ class LastfmController extends Controller
     {
         $lastfm = new Lastfm;
 
-        dd($lastfm->current());
-
-        return $lastfm->current();
+        return array_merge($lastfm->current(), [
+            'name' => session('name')
+        ]);
     }
 }
