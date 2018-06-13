@@ -28,7 +28,7 @@ class Lastfm
         $result = $this->client->get('http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=' . $name . '&api_key=' . env('LASTFM_API_KEY') . '&limit=1&format=json');
         $data = json_decode($result->getBody(), true)['recenttracks']['track'][0];
 
-        $id = md5($data['artist']['#text'] . $data['album']['#text']);
+        $id = md5($data['artist']['mbid']);
 
         return [
             'id' => $id,

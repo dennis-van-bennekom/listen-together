@@ -4,17 +4,20 @@ const app = http.createServer();
 const io = socket(app);
 
 io.on('connection', socket => {
-    socket.on('update', ({ id, track, name }) => {
-        if (socket.room && socket.room !== id) {
-            console.log('ey');
+    socket.on('update', ({ id, artist, track, name }) => {
+        if (socket.room !== id) {
             socket.leave(socket.room);
+
+            socket.room = id;
+            socket.name = name;
+            // socket.playing = artist + ' - ' + track;
+
+            socket.join(id, () => {
+                console.log(name + ' joined ' + id);
+
+
+            });
         }
-
-        socket.room = id;
-        socket.join(id);
-
-        socket.name = name;
-        socket.track = track;
     })
 });
 
